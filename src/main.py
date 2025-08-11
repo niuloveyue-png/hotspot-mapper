@@ -90,7 +90,6 @@ def main():
     notify_cfg = cfg.get("notify", {}).get("feishu", {})
     if notify_cfg.get("enabled") and notify_cfg.get("webhook", "").startswith("http"):
         webhook = notify_cfg["webhook"]
-        import os
         secret = os.getenv("FEISHU_BOT_SECRET") or None
 
         # prepare sections
@@ -135,7 +134,6 @@ def main():
     # Telegram push (optional)
     tg_cfg = cfg.get("notify", {}).get("telegram", {})
     if tg_cfg.get("enabled"):
-        import os
         token = os.getenv(tg_cfg.get("token_env", "TELEGRAM_BOT_TOKEN"))
         chat_id = tg_cfg.get("chat_id")
         if token and chat_id:
