@@ -72,6 +72,6 @@ notify:
     enabled: true
     # 建议将 token 放到环境变量 TELEGRAM_BOT_TOKEN
     token_env: "TELEGRAM_BOT_TOKEN"
-    chat_id: "REPLACE_ME_CHAT_ID"
+    chat_id: "7213652718"
     max_hotspots: 10
     max_mappings: 10
