@@ -1,0 +1,77 @@
+# 基本配置
+run:
+  out_dir: "outputs"
+  top_n: 50            # 每个源保留前 N 条
+  lookback_hours: 48   # Twitter/Reddit 抓取的时间窗口
+  timezone: "America/Los_Angeles"
+
+# 数据源开关
+sources:
+  google_trends:
+    enabled: true
+    regions: ["US", "GB", "JP"]   # Multiple regions
+    kw_seed: ["meme", "crypto", "viral", "tiktok", "trend"]
+  reddit:
+    enabled: true
+    subreddits: ["cryptocurrency", "memeeconomy", "trending"]
+    min_upvotes: 300
+  twitter:
+    enabled: true
+    # 会自动拼接布尔查询：(kw_any) AND lang=en NOT zh
+    kw_any: ["meme", "crypto", "viral", "pump", "token"]
+    max_results: 200
+  pumpfun:
+    enabled: true
+    limit: 120
+    kw_any: ["meme", "boss", "tiktok", "viral"]
+    # 会自动拼接布尔查询：(kw_any) AND lang=en NOT zh
+    kw_any: ["meme", "crypto", "viral", "pump", "token"]
+    max_results: 200
+
+# 关键词过滤（白/黑名单）
+filters:
+  whitelist_any: ["meme", "viral", "coin", "token", "crypto"]
+  blacklist_any: ["中文", "china", "cn", "大陆", "zh"]
+
+# DexScreener 映射参数
+mapping:
+  dexscreener:
+    enabled: true
+    min_liquidity_usd: 20000       # 最小流动性
+    min_fdv_usd: 1000000           # 最小 FDV（若可得）
+    chains: ["solana", "ethereum", "base", "bsc", "ton"]
+
+# 评分
+scoring:
+  weights:
+    multi_source_bonus: 1.2
+    recency_hours_half_life: 24
+    reddit_upvote_scale: 0.002     # 每个 upvote 的贡献
+    twitter_like_scale: 0.001      # 每个 like 的贡献
+    twitter_retweet_scale: 0.002
+
+
+# 飞书推送
+notify:
+  feishu:
+    enabled: true
+    # 在飞书群里添加“自定义机器人”，复制 Webhook 到这里；若设置了签名安全策略，把 secret 填到环境变量 FEISHU_BOT_SECRET
+    webhook: "https://open.feishu.cn/open-apis/bot/v2/hook/REPLACE_ME"
+    max_hotspots: 10
+    max_mappings: 10
+
+
+# Telegram 推送
+notify:
+  feishu:
+    enabled: false
+    webhook: "https://open.feishu.cn/open-apis/bot/v2/hook/REPLACE_ME"
+    max_hotspots: 10
+    max_mappings: 10
+  telegram:
+    enabled: true
+    # 建议将 token 放到环境变量 TELEGRAM_BOT_TOKEN
+    token_env: "TELEGRAM_BOT_TOKEN"
+    chat_id: "REPLACE_ME_CHAT_ID"
+    max_hotspots: 10
+    max_mappings: 10
